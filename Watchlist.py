@@ -11,6 +11,8 @@ print('Hello user ' + user + '! Welcome to your anime watchlist.')
 # Empty list meant to hold all the anime titles
 anime = []
 
+
+
 # Exisiting titles on list
 old_titles = """Jojo's Bizzare Adventure, \nAssassination Classroom, \nFood Wars, \nThe Night is Short, Walk on Girl,
 Mob Pyscho 100, \nDarling in the Franxx, \nKeep Your Hands off Eizouken, \nGhost Stories, \nSamurai Champloo, \nDeadman Wonderland,
@@ -29,13 +31,20 @@ source = open("anime_list.txt", "r")
 content = source.readlines()
 source.close()
 
+
+# Use to takr substring just before the comma in titles
+def comma_find(ln):
+    comma_index = ln.find(",")
+    new_word = ln[:comma_index]
+    return new_word
+
 count = 0
 for line in content:
     # Know how many are in the list
     count += 1
-    comma = line.find(",")
-    title = line[:comma]
+    title = comma_find(line)
     anime.append(title.lower())
+    #print(title)
 
 #print(anime)
 
@@ -48,6 +57,7 @@ Sort
 Display 
 """
 
+#Continue option
 cont = "yes"
 
 while True:
@@ -58,15 +68,16 @@ while True:
         print("------------------------------------- \n")
         print("""Features for Watchlist:
         1 - Add to list
-        2 - Delete from list
+        2 - Delete from lists
         3 - Current show
         4 - Sort
         5 - Display\n""")
         feature = int(input("Input a choice 1 - 5 for a feature: "))
         print("-------------------------------------")
 
+        # Add
         if feature == 1:
-            # Add
+            
             new = input("What show would you like to add? ")
             addition = new + ", \n"
             # Only id it doesn't already exist in the list
@@ -79,8 +90,9 @@ while True:
                 print("Already on the list.")
         # Complete for further notice
 
+        # Delete
         elif feature == 2:
-            # Delete
+            
             source = open("anime_list.txt", "r")
             content = source.readlines()
             source.close
@@ -93,6 +105,8 @@ while True:
                     if pick.lower() == title:
                         del content[val - 1]
                         anime = content
+
+
             else:
                 print("This show doesn't exist in the list")
 
@@ -106,8 +120,9 @@ while True:
             pass
         # Complete for further notice
 
+        # Current
         elif feature == 3:
-            # Current
+            
             current = input("What anime are you currently watching? ")
 
             if current.lower() in anime:
@@ -130,8 +145,9 @@ while True:
 
             pass
 
+        # Sort
         elif feature == 4:
-            # Sort 
+             
             #print("Sort")
 
             diff = "yes"
@@ -146,13 +162,14 @@ while True:
                     2 - Title length
                     3 - Episode Count
                     4 - Oldest to Newest
+                    5 - Reverse
                     """)
-                    feature = int(input("Input a choice 1-4 for a feature: "))
+                    feature = int(input("Input a choice 1-5 for a feature: "))
                     print("-------------------------------------")
 
-            
+                    
+                    # Aplhabet
                     if feature == 1:
-                        # Aplhabet
 
                         source = open("anime_list.txt", "r")
                         content = source.readlines()
@@ -163,15 +180,13 @@ while True:
                             pass
                         pass
 
+                    # Title Length
                     elif feature == 2:
-                        # Title Length
 
                         source = open("anime_list.txt", "r")
                         content = source.readlines()
                         source.close()
                         
-                        num = 0
-                        title_length = []
 
                         """ Take the length pf each title in the list. 
                         Add the lengths to the list. 
@@ -179,65 +194,81 @@ while True:
                         Rewrite the watchlist by comparing the title length by the index in the list
                         Take the first one that matchest in the list and delete in from content"""
 
-                        # All of title length values are put into the list
-                        while True:  
-                            for title in content:
-                                tit_len = len(title) - title.count(",") - title.count(" ") - title.count("\n")
-                                #print(tit_len)
-                                title_length.append(tit_len)
-                                #print(num)
+                        # Array of just titles
+                        #print(content)
+
+                        titles = []
+                        for line in content:
+                            title = comma_find(line)
+                            titles.append(title)
+
+                        # Sort the titles by length
+                        """
+                        Convert string to list
+                        Delete space from string using find
+                        index words based off letter count
+                        """
+                        titles_fix = titles.copy()
+                        
+                        num = 0
+                        for title in titles_fix:
+                            for letter in title:
                                 num += 1
-                                #print(title_length[num-1])
-                                pass
-                            break
-                        
-                        # Rearrange the lengths by decreasing order 
-                        title_length.sort(reverse= True)
+                                if (letter == " "):
+                                    space = num
 
-                        titles = content.copy()
-
-                        """
-                        List comprehneison for title_length
-                        Compare the len values to the titles from titles
-                        If the values match replace content value 
-                        Rewrite content to text file
-                        """
-                        
-                        #print(num)
-
-                        count = 0
-
-                        #print(title_length)
-                        #[34, 31, 27, 26, 24, 21, 20, 19, 17, 15, 14, 14, 13, 13, 12, 11, 9]
-                        #[25, 24, 22, 22, 18, 17, 15, 15, 12, 11, 10, 10, 10, 9, 8, 8, 6]
-
-                        for title in content:
-                            # Find the index of the title length that matches the title 
+                            l = list(title)
+                            del(l[space])
+                            title = "".join(l)
                             print(title)
-                            ln = len(title) - title.count(",") - title.count(" ") - title.count("\n")
-                            print(ln)
-                            index = title_length.index(ln)
-                            titles[index - 1] = title
-                            titles.remove(title)
-                            count += 1
-                            if count >= len(content):
-                                break
+                                    
 
-                        #print(titles)
+                        
+                        #titles_fix.sort(key=len)
+                        #titles_len.sort(key=len)
+                        #print(titles_fix)
+                       # print(titles_len)
 
                         print("-------------------------------------")
                         pass
 
+                    # Episode count
                     elif feature == 3:
-                        # Episode count
 
 
                         pass
 
+                    # Oldest to Newest
                     elif feature == 4:
-                        # Oldest to Newest
+                        
+
                         pass
 
+                    # Reverse
+                    elif feature == 5:
+                        item_lst = []
+
+                        source = open("anime_list.txt", "r")
+                        content = source.readlines()
+                        source.close()
+                        
+                        for title in content:
+                            item = comma_find(title)
+                            item_lst.append(item)
+
+                        item_lst.reverse()
+                        # print(item_lst)
+                            
+                        # Write new list to file
+                        source = open("anime_list.txt", "w+")
+                        for item in item_lst:
+                            addition = item 
+                            source.write(addition)
+                        source.close()
+                        pass
+                    # Complete for now
+
+                    # Invalid Option
                     else:
                         print("Invalid Choice.")
 
@@ -258,15 +289,15 @@ while True:
 
             pass
 
+        # Display list
         elif feature == 5:
-            # Display list
+
             # print("Display")
             print("Here's " + user + "'s anime watchlist: \n")
             source = open("anime_list.txt", "r")
             content = source.readlines()
-            for title in content:
-                comma = title.find(",")
-                title = title[:comma]
+            for line in content:
+                title = comma_find(line)
                 print(title)
             pass
         #Complete for further notice
