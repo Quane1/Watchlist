@@ -11,10 +11,13 @@ print('Hello user ' + user + '! Welcome to your anime watchlist.')
 # Empty list meant to hold all the anime titles
 anime = []
 
+# Empty list to have the chronological order
+org_order = []
+
 
 
 # Exisiting titles on list
-old_titles = """Jojo's Bizzare Adventure, \nAssassination Classroom, \nFood Wars, \nThe Night is Short, Walk on Girl,
+old_titles = """Jojo's Bizzare Adventure, \nAssassination Classroom, \nFood Wars, \nThe Night is Short Walk on Girl,
 Mob Pyscho 100, \nDarling in the Franxx, \nKeep Your Hands off Eizouken, \nGhost Stories, \nSamurai Champloo, \nDeadman Wonderland,
 Inuyasha, \nBleach, \nGod of High School, \nSailor Moon, \nFire Force, \nEvangelion, \nFooly Cooly, \nOne Piece, \nGhost Stories, \n"""
 
@@ -44,6 +47,9 @@ for line in content:
     count += 1
     title = comma_find(line)
     anime.append(title.lower())
+
+    # Able to get chronological order of additions
+    org_order.append(title)
     #print(title)
 
 #print(anime)
@@ -85,7 +91,9 @@ while True:
                 source = open("anime_list.txt", "a")
                 source.write(addition)
                 anime.append(new.lower())
+                org_order.append(new)
                 source.close()
+                count += 1
             else:
                 print("Already on the list.")
         # Complete for further notice
@@ -105,6 +113,9 @@ while True:
                     if pick.lower() == title:
                         del content[val - 1]
                         anime = content
+
+                org_order.remove(pick)
+                count -= 1
 
 
             else:
@@ -240,9 +251,23 @@ while True:
 
                     # Oldest to Newest
                     elif feature == 4:
-                        
+                        #print(org_order)
+                        item_lst = []
+
+                        for title in org_order:
+                            print(title)
+                            item_lst.append(title)
+
+                        #print(item_lst)    
+
+                        source = open("anime_list.txt", "w+")
+                        for item in item_lst:
+                            addition = item  + ", \n"
+                            source.write(addition)
+                        source.close()
 
                         pass
+                    # Complete for now
 
                     # Reverse
                     elif feature == 5:
@@ -262,7 +287,7 @@ while True:
                         # Write new list to file
                         source = open("anime_list.txt", "w+")
                         for item in item_lst:
-                            addition = item 
+                            addition = item  + ", \n"
                             source.write(addition)
                         source.close()
                         pass
