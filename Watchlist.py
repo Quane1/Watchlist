@@ -41,6 +41,25 @@ def comma_find(ln):
     new_word = ln[:comma_index]
     return new_word
 
+# Make abrivations to store the anime titles by name
+"""def abriv(ttl):
+    i = 0
+    word = 1
+    lts = []
+    for lt in ttl:    
+        lts[i] = lt
+        i += 1
+    frst = lts[0].upper()
+    acro = frst
+    while " " in lts[i]:
+        word +1
+        next_word = lts[i+1].upper()
+        acro = acro + "_" + next_word
+        lts.remove(" ")
+    return acro    
+    """
+
+
 count = 0
 for line in content:
     # Know how many are in the list
@@ -50,7 +69,8 @@ for line in content:
 
     # Able to get chronological order of additions
     org_order.append(title)
-    #print(title)
+    """print(title)
+    print(abriv(title))"""
 
 #print(anime)
 
