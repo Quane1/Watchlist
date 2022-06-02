@@ -2,8 +2,8 @@
 Monitor and update the anime watchlist text file with the program below
 """
 
-# Import lines
-
+# Import Lines
+import helper_func
 
 user = input("What is your name? ")
 print('Hello user ' + user + '! Welcome to your anime watchlist.')
@@ -13,7 +13,6 @@ anime = []
 
 # Empty list to have the chronological order
 org_order = []
-
 
 
 # Exisiting titles on list
@@ -35,43 +34,18 @@ content = source.readlines()
 source.close()
 
 
-# Use to takr substring just before the comma in titles
-def comma_find(ln):
-    comma_index = ln.find(",")
-    new_word = ln[:comma_index]
-    return new_word
-
-# Make abrivations to store the anime titles by name
-"""def abriv(ttl):
-    i = 0
-    word = 1
-    lts = []
-    for lt in ttl:    
-        lts[i] = lt
-        i += 1
-    frst = lts[0].upper()
-    acro = frst
-    while " " in lts[i]:
-        word +1
-        next_word = lts[i+1].upper()
-        acro = acro + "_" + next_word
-        lts.remove(" ")
-    return acro    
-    """
-
 
 count = 0
 for line in content:
     # Know how many are in the list
     count += 1
-    title = comma_find(line)
+    title = helper_func.comma_find(line)
     anime.append(title.lower())
 
     # Able to get chronological order of additions
     org_order.append(title)
-    """print(title)
-    print(abriv(title))"""
-
+    #print(title)
+    
 #print(anime)
 
 """
@@ -230,7 +204,7 @@ while True:
 
                         titles = []
                         for line in content:
-                            title = comma_find(line)
+                            title = helper_func.comma_find(line)
                             titles.append(title)
 
                         # Sort the titles by length
@@ -298,7 +272,7 @@ while True:
                         source.close()
                         
                         for title in content:
-                            item = comma_find(title)
+                            item = helper_func.comma_find(title)
                             item_lst.append(item)
 
                         item_lst.reverse()
@@ -342,7 +316,7 @@ while True:
             source = open("anime_list.txt", "r")
             content = source.readlines()
             for line in content:
-                title = comma_find(line)
+                title = helper_func.comma_find(line)
                 print(title)
             pass
         #Complete for further notice
