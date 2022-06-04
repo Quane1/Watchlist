@@ -45,3 +45,18 @@ def abriv(ttl):
         counter += 1
 
     return acro    
+
+# Establishes a dictionary full of details about each title
+def deat(ttl, choice = "null", val = "null"):
+
+    details = {}
+
+    if choice == 'null':
+        details["title"] = ttl
+        details["abrivation"] = abriv(ttl)
+        details["word count"] = word_counter(ttl)
+        pass
+    else:
+        details[choice] = val
+        
+    return details

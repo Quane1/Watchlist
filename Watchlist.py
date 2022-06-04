@@ -14,6 +14,9 @@ anime = []
 # Empty list to have the chronological order
 org_order = []
 
+# Empty list holding all the details
+data = []
+
 
 # Exisiting titles on list
 old_titles = """Jojo's Bizzare Adventure, \nAssassination Classroom, \nFood Wars, \nThe Night is Short Walk on Girl,
@@ -45,7 +48,11 @@ for line in content:
     # Able to get chronological order of additions
     org_order.append(title)
     #print(title)
-    
+    print(helper_func.abriv(title))
+    print(helper_func.deat(title))
+    #data.append(helper_func.deat(title))
+
+#print(data)
 #print(anime)
 
 """
@@ -203,6 +210,9 @@ while True:
                         #print(content)
 
                         titles = []
+                        titles_len = []
+                        
+
                         for line in content:
                             title = helper_func.comma_find(line)
                             titles.append(title)
@@ -214,24 +224,29 @@ while True:
                         index words based off letter count
                         """
                         titles_fix = titles.copy()
+                        total = 0
                         
-                        num = 0
                         for title in titles_fix:
-                            for letter in title:
-                                num += 1
-                                if (letter == " "):
-                                    space = num
 
-                            l = list(title)
-                            del(l[space])
-                            title = "".join(l)
-                            print(title)
-                                    
+                            count = helper_func.word_counter(title)
+                            if count > 1:
+                                whole_title = list(title.split(" "))
+
+                                for indv_title in whole_title:
+                                    total = total + len(indv_title)
+
+                            else:
+                                total = len(title)
+
+                            titles_len.append(total)
+
+
+
 
                         
-                        #titles_fix.sort(key=len)
+                        titles_fix.sort(key=len)
                         #titles_len.sort(key=len)
-                        #print(titles_fix)
+                        print(titles_fix)
                        # print(titles_len)
 
                         print("-------------------------------------")
@@ -251,6 +266,8 @@ while True:
                         for title in org_order:
                             print(title)
                             item_lst.append(title)
+                            placement = item_lst.index(title)
+                            helper_func.details(title, "Order", placement)
 
                         #print(item_lst)    
 
