@@ -48,9 +48,9 @@ for line in content:
     # Able to get chronological order of additions
     org_order.append(title)
     #print(title)
-    print(helper_func.abriv(title))
-    print(helper_func.deat(title))
-    #data.append(helper_func.deat(title))
+    #print(helper_func.abriv(title))
+    #print(helper_func.deat(title))
+    data.append(helper_func.deat(title))
 
 #print(data)
 #print(anime)
