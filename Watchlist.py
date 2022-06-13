@@ -3,6 +3,7 @@ Monitor and update the anime watchlist text file with the program below
 """
 
 # Import Lines
+from distutils.log import info
 import helper_func
 
 user = input("What is your name? ")
@@ -14,8 +15,11 @@ anime = []
 # Empty list to have the chronological order
 org_order = []
 
-# Empty list holding all the details
+# Empty list holding all the details to be written to a file
 data = []
+
+# Dict to attach abriv to details
+infr = {}
 
 
 # Exisiting titles on list
@@ -50,9 +54,11 @@ for line in content:
     #print(title)
     #print(helper_func.abriv(title))
     #print(helper_func.deat(title))
-    data.append(helper_func.deat(title))
+    
+    infr[helper_func.abriv(title)] = helper_func.deat(title)
+    data.append(infr[helper_func.abriv(title)])
 
-#print(data)
+print(infr)
 #print(anime)
 
 """
@@ -176,7 +182,7 @@ while True:
                     4 - Oldest to Newest
                     5 - Reverse
                     """)
-                    feature = int(input("Input a choice 1-5 for a feature: "))
+                    feature = int(input("Input a choice 1 - 5 for a feature: "))
                     print("-------------------------------------")
 
                     
@@ -211,6 +217,8 @@ while True:
 
                         titles = []
                         titles_len = []
+
+                        wrd = ""
                         
 
                         for line in content:
@@ -224,9 +232,11 @@ while True:
                         index words based off letter count
                         """
                         titles_fix = titles.copy()
-                        total = 0
+                        
                         
                         for title in titles_fix:
+
+                            total = 0
 
                             count = helper_func.word_counter(title)
                             if count > 1:
@@ -234,11 +244,14 @@ while True:
 
                                 for indv_title in whole_title:
                                     total = total + len(indv_title)
+                                    wrd += indv_title
 
                             else:
                                 total = len(title)
-
-                            titles_len.append(total)
+                                
+                            
+                            infr.update({helper_func.abriv(title): helper_func.deat(title, "title length", total)})
+                            
 
 
 
@@ -246,7 +259,7 @@ while True:
                         
                         titles_fix.sort(key=len)
                         #titles_len.sort(key=len)
-                        print(titles_fix)
+                        print(infr)
                        # print(titles_len)
 
                         print("-------------------------------------")
@@ -267,7 +280,7 @@ while True:
                             print(title)
                             item_lst.append(title)
                             placement = item_lst.index(title)
-                            helper_func.details(title, "Order", placement)
+                            infr.update({helper_func.abriv(title): helper_func.deat(title, "order", placement)})
 
                         #print(item_lst)    
 

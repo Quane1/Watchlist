@@ -51,12 +51,11 @@ def deat(ttl, choice = "null", val = "null"):
 
     details = {}
 
-    if choice == 'null':
-        details["title"] = ttl
-        details["abrivation"] = abriv(ttl)
-        details["word count"] = word_counter(ttl)
-        pass
-    else:
-        details[choice] = val
+    details["title"] = ttl
+    details["abrivation"] = abriv(ttl)
+    details["word count"] = word_counter(ttl)
         
+    if choice != "null":
+        details.update({choice: val})
+
     return details
