@@ -6,8 +6,18 @@ Monitor and update the anime watchlist text file with the program below
 from distutils.log import info
 import helper_func
 
-user = input("What is your name? ")
-print('Hello user ' + user + '! Welcome to your anime watchlist.')
+user = False
+
+while user == False:
+
+    name = input("What is your name? ")
+    if name == " " or name == "":
+        user = False
+        print("Invalid Name.")
+    else:
+        user = True
+        print('Hello user ' + name + '! Welcome to your anime watchlist.')
+        break
 
 # Empty list meant to hold all the anime titles
 anime = []
@@ -36,7 +46,7 @@ source.close()
 """
 
 # Anime list has only the title of those in the text file
-source = open("anime_list.txt", "r")
+source = open("Watchlist/anime_list.txt", "r")
 content = source.readlines()
 source.close()
 
@@ -58,7 +68,7 @@ for line in content:
     infr[helper_func.abriv(title)] = helper_func.deat(title)
     data.append(infr[helper_func.abriv(title)])
 
-print(infr)
+#print(infr)
 #print(anime)
 
 """
@@ -95,7 +105,7 @@ while True:
             addition = new + ", \n"
             # Only id it doesn't already exist in the list
             if new.lower() not in anime:
-                source = open("anime_list.txt", "a")
+                source = open("Watchlist/anime_list.txt", "a")
                 source.write(addition)
                 anime.append(new.lower())
                 org_order.append(new)
@@ -108,11 +118,11 @@ while True:
         # Delete
         elif feature == 2:
             
-            source = open("anime_list.txt", "r")
+            source = open("Watchlist/anime_list.txt", "r")
             content = source.readlines()
             source.close
             val = 0
-            pick = input("WHhich anime do you want to delete? ")
+            pick = input("Which anime do you want to delete? ")
             # Delete by the index in list
             if pick.lower() in anime:
                 for title in anime:
@@ -129,7 +139,7 @@ while True:
                 print("This show doesn't exist in the list")
 
             # Write new list to file
-            source = open("anime_list.txt", "w+")
+            source = open("Watchlist/anime_list.txt", "w+")
             for title in content:
                 addition = title 
                 source.write(addition)
@@ -155,7 +165,7 @@ while True:
                 pass
 
             else:
-                source = open("anime_list.txt", "a")
+                source = open("Watchlist/anime_list.txt", "a")
                 anime.append(current.lower())
                 addition = current + ", \n"
                 source.write(addition)
@@ -189,7 +199,7 @@ while True:
                     # Aplhabet
                     if feature == 1:
 
-                        source = open("anime_list.txt", "r")
+                        source = open("Watchlist/anime_list.txt", "r")
                         content = source.readlines()
                         source.close()
                         
@@ -201,7 +211,7 @@ while True:
                     # Title Length
                     elif feature == 2:
 
-                        source = open("anime_list.txt", "r")
+                        source = open("Watchlist/anime_list.txt", "r")
                         content = source.readlines()
                         source.close()
                         
@@ -259,8 +269,8 @@ while True:
                         
                         titles_fix.sort(key=len)
                         #titles_len.sort(key=len)
-                        print(infr)
-                       # print(titles_len)
+                        #print(infr)
+                        print(titles_fix)
 
                         print("-------------------------------------")
                         pass
@@ -284,7 +294,7 @@ while True:
 
                         #print(item_lst)    
 
-                        source = open("anime_list.txt", "w+")
+                        source = open("Watchlist/anime_list.txt", "w+")
                         for item in item_lst:
                             addition = item  + ", \n"
                             source.write(addition)
@@ -297,7 +307,7 @@ while True:
                     elif feature == 5:
                         item_lst = []
 
-                        source = open("anime_list.txt", "r")
+                        source = open("Watchlist/anime_list.txt", "r")
                         content = source.readlines()
                         source.close()
                         
@@ -309,7 +319,7 @@ while True:
                         # print(item_lst)
                             
                         # Write new list to file
-                        source = open("anime_list.txt", "w+")
+                        source = open("Watchlist/anime_list.txt", "w+")
                         for item in item_lst:
                             addition = item  + ", \n"
                             source.write(addition)
@@ -342,8 +352,8 @@ while True:
         elif feature == 5:
 
             # print("Display")
-            print("Here's " + user + "'s anime watchlist: \n")
-            source = open("anime_list.txt", "r")
+            print("Here's " + name + "'s anime watchlist: \n")
+            source = open("Watchlist/anime_list.txt", "r")
             content = source.readlines()
             for line in content:
                 title = helper_func.comma_find(line)
